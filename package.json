@@ -1,6 +1,6 @@
 {
   "name": "react-kindle-clippings",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A react component to parse and display kindle notes",
   "author": "thisisrajiraj",
   "license": "MIT",
@@ -57,7 +57,7 @@
   "bugs": {
     "url": "https://github.com/thisisrajiraj/react-kindle-clippings/issues"
   },
-  "homepage": "https://github.com/thisisrajiraj/react-kindle-clippings#readme",
+  "homepage": "https://thisisrajiraj.github.io/react-kindle-clippings",
   "directories": {
     "kindleclippings": "kindleclippings"
   },

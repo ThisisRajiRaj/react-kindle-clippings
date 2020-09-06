@@ -44,8 +44,23 @@ class KindleClippings extends Component {
   }
 
   render() {
+    const numBooksToShow = 5;
 
-
+    let remaining = Object.keys(this.state.highlightsTable).length
+      - numBooksToShow;
+    let remainingStr = undefined;
+    if (remaining > 0) {
+      remainingStr =
+        <Dropdown.Item
+          onClick={this.handleClick}
+          id={`bookdropdownMore`}
+          key={`bookdropdownMore`}
+          eventKey="Select"
+          disabled="true"
+        >
+          {`...there are more books. Type book name you are looking for.`}
+        </Dropdown.Item>
+    }
     // forwardRef again here!
     // Dropdown needs access to the DOM of the Menu to measure it
     const CustomMenu = React.forwardRef(
@@ -70,7 +85,10 @@ class KindleClippings extends Component {
               {React.Children.toArray(children).filter(
                 (child) =>
                   !value || child.props.children.toLowerCase().includes(value),
-              )}
+              )
+                .slice(0, numBooksToShow)}
+
+              {remainingStr}
             </ul>
           </div>
         );
@@ -85,20 +103,21 @@ class KindleClippings extends Component {
 
           <Dropdown.Menu as={CustomMenu}>
             {
-              Object.keys(this.state.highlightsTable).map((book) => {
-                return (
-                  <Dropdown.Item
-                    onClick={this.handleClick}
-                    id={`bookdropdown${book}`}
-                    key={`bookdropdown${book}`}
-                    eventKey={book}
-                  >
-                    {book}
-                  </Dropdown.Item>
-                )
-              })
+              // Show just the top 5 books
+              Object.keys(this.state.highlightsTable)
+                .map((book) => {
+                  return (
+                    <Dropdown.Item
+                      onClick={this.handleClick}
+                      id={`bookdropdown${book}`}
+                      key={`bookdropdown${book}`}
+                      eventKey={book}
+                    >
+                      {book}
+                    </Dropdown.Item>
+                  )
+                })
             }
-
           </Dropdown.Menu>
         </Dropdown>
         <br />
