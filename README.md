@@ -33,6 +33,17 @@ path of your kindle.
 Copy this file, and save it as "KindleClippings.txt" to a public
 URL which you will pass into this React component as a property
 
+## To publish to NPM
+I followed the instructions here [[https://dev.to/ramonak/how-to-publish-a-custom-react-component-to-npm-using-create-react-library-4bhi]] and 
+used the following to bootstrap the project:
+
+`` npx create-react-library [my project name] ``
+
+This sets up everything needed to publish to NPM, and all I had to in the end
+was to simply run
+
+`` npm publish ``
+
 ## License
 
 MIT © [thisisrajiraj](https://github.com/thisisrajiraj)
