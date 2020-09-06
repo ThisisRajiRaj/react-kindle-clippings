@@ -1,8 +1,8 @@
-import React, { Component, useState } from "react";
-import Dropdown from "react-bootstrap/Dropdown";
+import React, { Component } from "react";
 import Card from 'react-bootstrap/Card'
-import FormControl from 'react-bootstrap/FormControl'
 import ClippingsParser from "./clippingsparser";
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TextField from '@material-ui/core/TextField';
 
 class KindleClippings extends Component {
   constructor(props) {
@@ -13,7 +13,6 @@ class KindleClippings extends Component {
       highlightsTable: {},
       url: props.url
     };
-    this.handleClick = this.handleClick.bind(this);
   }
   async getHighlightsTable() {
     let parser = new ClippingsParser();
@@ -29,11 +28,6 @@ class KindleClippings extends Component {
     this.getHighlights("Select");
   }
 
-  handleClick(evt) {
-    console.log(evt.currentTarget.textContent)
-    this.getHighlights(evt.currentTarget.textContent)
-  }
-
   getHighlights(bookTitle) {
     this.setState((state) => ({
       selectedBook: bookTitle,
@@ -44,82 +38,20 @@ class KindleClippings extends Component {
   }
 
   render() {
-    const numBooksToShow = 5;
-
-    let remaining = Object.keys(this.state.highlightsTable).length
-      - numBooksToShow;
-    let remainingStr = undefined;
-    if (remaining > 0) {
-      remainingStr =
-        <Dropdown.Item
-          onClick={this.handleClick}
-          id={`bookdropdownMore`}
-          key={`bookdropdownMore`}
-          eventKey="Select"
-          disabled="true"
-        >
-          {`...there are more books. Type book name you are looking for.`}
-        </Dropdown.Item>
-    }
-    // forwardRef again here!
-    // Dropdown needs access to the DOM of the Menu to measure it
-    const CustomMenu = React.forwardRef(
-      ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
-        const [value, setValue] = useState('');
-
-        return (
-          <div
-            ref={ref}
-            style={style}
-            className={className}
-            aria-labelledby={labeledBy}
-          >
-            <FormControl
-              autoFocus
-              className="mx-3 my-2 w-auto"
-              placeholder="Type to filter..."
-              onChange={(e) => setValue(e.target.value)}
-              value={value}
-            />
-            <ul className="list-unstyled">
-              {React.Children.toArray(children).filter(
-                (child) =>
-                  !value || child.props.children.toLowerCase().includes(value),
-              )
-                .slice(0, numBooksToShow)}
-
-              {remainingStr}
-            </ul>
-          </div>
-        );
-      },
-    );
+    
     return (
       <div>
-        <Dropdown>
-          <Dropdown.Toggle id="dropdown-custom-components">
-            {this.state.selectedBook}
-          </Dropdown.Toggle>
-
-          <Dropdown.Menu as={CustomMenu}>
-            {
-              // Show just the top 5 books
-              Object.keys(this.state.highlightsTable)
-                .map((book) => {
-                  return (
-                    <Dropdown.Item
-                      onClick={this.handleClick}
-                      id={`bookdropdown${book}`}
-                      key={`bookdropdown${book}`}
-                      eventKey={book}
-                    >
-                      {book}
-                    </Dropdown.Item>
-                  )
-                })
-            }
-          </Dropdown.Menu>
-        </Dropdown>
+         <Autocomplete
+            id="bookTitlesDropDown"
+            value={this.state.selectedBook}
+            onChange={(event, newValue) => {
+              this.getHighlights(newValue);
+            }}
+            options={Object.keys(this.state.highlightsTable)}
+            getOptionLabel={(option) => option}
+            style={{ width: 300, paddingTop: 10 }}
+            renderInput={(params) => <TextField {...params} label="Type a book name" variant="outlined" />}
+          />
         <br />
         {this.state.selectedBookHighlights.map(item => {
           return (<Card body>{item.text}</Card>)
