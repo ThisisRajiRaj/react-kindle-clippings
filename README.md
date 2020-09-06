@@ -10,20 +10,28 @@
 npm install --save react-kindle-clippings
 ```
 
-## Usage
-
+## Using the component in your React App
+To use the KindleClippings React component in your own React app/web page,
+follow the steps below
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-kindle-clippings'
-import 'react-kindle-clippings/dist/index.css'
+import KindleClippings from 'react-kindle-clippings'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <KindleClippings url="[URL to fetch kindleclippings.txt from]" />
   }
 }
 ```
+## How to find and save your Kindle highlights file 
+You can find your Kindle notes and highlights when you connect
+your kindle to your computer. Your highlights are saved in a 
+file named "My Clippings.txt" in the root folder of the mounted
+path of your kindle.
+
+Copy this file, and save it as "KindleClippings.txt" to a public
+URL which you will pass into this React component as a property
 
 ## License
 
