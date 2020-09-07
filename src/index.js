@@ -38,23 +38,35 @@ class KindleClippings extends Component {
   }
 
   render() {
-    
+
     return (
       <div>
-         <Autocomplete
-            id="bookTitlesDropDown"
-            value={this.state.selectedBook}
-            onChange={(event, newValue) => {
-              this.getHighlights(newValue);
-            }}
-            options={Object.keys(this.state.highlightsTable)}
-            getOptionLabel={(option) => option}
-            style={{ width: 300, paddingTop: 10 }}
-            renderInput={(params) => <TextField {...params} label="Type a book name" variant="outlined" />}
-          />
+        <Autocomplete
+          id="bookTitlesDropDown"
+          value={this.state.selectedBook}
+          onChange={(event, newValue) => {
+            this.getHighlights(newValue);
+          }}
+          options={Object.keys(this.state.highlightsTable)}
+          getOptionLabel={(option) => option}
+          style={{ width: 300, paddingTop: 10 }}
+          renderInput={(params) => <TextField {...params} label="Type a book name" variant="outlined" />}
+        />
         <br />
         {this.state.selectedBookHighlights.map(item => {
-          return (<Card body>{item.text}</Card>)
+          return (
+          <Card>
+            <Card.Body>
+              <blockquote className="blockquote mb-0">
+                <p>
+                {item.text}
+                </p>
+                <footer className="blockquote-footer">
+                  {item.location} <cite title="Source Title">{item.date}</cite>
+                </footer>
+              </blockquote>
+            </Card.Body>
+          </Card>)
         })}
 
       </div>

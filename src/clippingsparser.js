@@ -14,7 +14,8 @@ class ClippingsParser {
         });
         
         var grouped = {};
-        highlights.forEach(function (item) {
+        for (let i = highlights.length - 1; i >=0; i--) {
+            let item = highlights[i];
             var title = item.title;
             var titleHighlights;
 
@@ -26,13 +27,12 @@ class ClippingsParser {
             }
 
             titleHighlights.push({
-                metadata: item.metadata,
+                location: item.location,
+                date:item.date,
                 text: item.text
             });
-        });
-        
-        return grouped;
-        
+        }
+        return grouped;        
     }
 
     // Return just the highlights, not the notes
@@ -51,33 +51,19 @@ class ClippingsParser {
         if (rest !== undefined) {
             rest = rest.join('\n').trim();
         }
+        var metachunks = metadata.split("|");
+        let location = metadata;
+        let date = "";
+        if (metachunks.length > 1) {
+            location = metachunks[0].replace("- Your ","");
+            date = metachunks[1];
+        }
         return {
             title: title,
-            metadata: metadata,
+            location: location,
+            date:date,
             text: rest
         };
-    }
-
-    // Group highlights by title
-    groupHighlights(items) {
-        var grouped = {};
-        items.forEach(function (item) {
-            var title = item.title;
-            var titleHighlights;
-
-            if (grouped[title] === undefined) {
-                titleHighlights = [];
-                grouped[title] = titleHighlights;
-            } else {
-                titleHighlights = grouped[title];
-            }
-
-            titleHighlights.push({
-                metadata: item.metadata,
-                text: item.text
-            });
-        });
-        return grouped;
     }
 }
 
