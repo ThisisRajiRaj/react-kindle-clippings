@@ -55,14 +55,14 @@ class KindleClippings extends Component {
         <br />
         {this.state.selectedBookHighlights.map(item => {
           return (
-          <Card>
+          <Card key={`higlight${item.id}`}>
             <Card.Body>
               <blockquote className="blockquote mb-0">
                 <p>
                 {item.text}
                 </p>
                 <footer className="blockquote-footer">
-                  {item.location} <cite title="Source Title">{item.date}</cite>
+                  {item.location}. <cite title="Source Title">Added on {item.date}</cite>
                 </footer>
               </blockquote>
             </Card.Body>

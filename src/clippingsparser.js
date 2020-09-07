@@ -27,6 +27,7 @@ class ClippingsParser {
             }
 
             titleHighlights.push({
+                id:i,
                 location: item.location,
                 date:item.date,
                 text: item.text
@@ -55,8 +56,9 @@ class ClippingsParser {
         let location = metadata;
         let date = "";
         if (metachunks.length > 1) {
-            location = metachunks[0].replace("- Your ","");
-            date = metachunks[1];
+            location = metachunks[0].replace("- Your ","").trim();
+            let datestr = metachunks[1].replace("Added on ","");
+            date = new Date(datestr).toDateString()
         }
         return {
             title: title,

@@ -1,6 +1,6 @@
 {
   "name": "react-kindle-clippings",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "A react component to parse and display kindle notes",
   "author": "thisisrajiraj",
   "license": "MIT",
